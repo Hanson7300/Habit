@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //更新第一行的信息
     private void updateHabit() {
         ContentValues newValues = new ContentValues();
         newValues.put(HabitContract.HabitEntry.EVENT,"Sport");
