@@ -7,4 +7,12 @@
     <string name="time_expectation">time expection(min)</string>
     <string name="save">save</string>
     <string name="quit">quit</string>
+    <string name="saved_with_id">Habit saved with id :</string>
+    <string name="error_with_saving">Error with saving habit</string>
+    <string name="type_in_data">Please type in data</string>
+    <string name="table_contains">The habits table contains </string>
+    <string name="habits">habits.\n\n</string>
+    <string name="minutes">(minutes)</string>
+    <string name="update_data">Update Data</string>
+    <string name="delete_all">Delete ALL</string>
 </resources>

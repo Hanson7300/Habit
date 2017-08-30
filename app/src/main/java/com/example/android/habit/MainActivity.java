@@ -1,5 +1,6 @@
 package com.example.android.habit;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,7 +18,7 @@ import com.example.android.habit.data.HabitDbHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    private HabitDbHelper mDbhelper;
+    private HabitDbHelper mDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        mDbhelper = new HabitDbHelper(this);
+        mDbHelper = new HabitDbHelper(this);
         displayDataBaseInfo();
     }
 
@@ -60,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
         try{
             //用TextView显示表头
-            displayTextView.setText("The habits table contains "+ cursor.getCount()+" habits.\n\n");
+            displayTextView.setText(getString(R.string.table_contains)+ cursor.getCount()+getString(R.string.habits));
             displayTextView.append(HabitContract.HabitEntry.TABLE_NAME+" - "
                     + HabitContract.HabitEntry.EVENT+" - "
-                    + HabitContract.HabitEntry.EXP_TIME_MINUTES+"(minutes)\n");
+                    + HabitContract.HabitEntry.EXP_TIME_MINUTES+getString(R.string.minutes)+"\n");
 
             //取得表格所有列的index
             int idIndex = cursor.getColumnIndex(HabitContract.HabitEntry._ID);
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void deleteAllHabits(){
-        SQLiteDatabase db = mDbhelper.getWritableDatabase();
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
         db.delete(HabitContract.HabitEntry.TABLE_NAME,null,null);
     }
 
@@ -103,17 +104,27 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_delete_all_habits) {
-            deleteAllHabits();
-            displayDataBaseInfo();
-            return true;
+        switch (item.getItemId()){
+            case R.id.action_delete_all_habits:
+                deleteAllHabits();
+                displayDataBaseInfo();
+                return true;
+            case R.id.action_update_data:
+                updateHabit();
+                displayDataBaseInfo();
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+
+    private void updateHabit() {
+        ContentValues newValues = new ContentValues();
+        newValues.put(HabitContract.HabitEntry.EVENT,"Sport");
+        newValues.put(HabitContract.HabitEntry.EXP_TIME_MINUTES, 100);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db.update(HabitContract.HabitEntry.TABLE_NAME, newValues,"_id="+1, null);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
