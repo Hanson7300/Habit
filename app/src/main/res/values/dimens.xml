@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="plus_icon_dimen">32dp</dimen>
+    <dimen name="editor_dimen">16dp</dimen>
+    <dimen name="event_title">24sp</dimen>
+    <dimen name="time_title">24sp</dimen>
+</resources>
